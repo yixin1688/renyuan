@@ -1,0 +1,22 @@
+backend/target/
+backend/data/
+frontend/node_modules/
+frontend/dist/
+.idea/
+*.iml
+.DS_Store
+# Docker 安装相关（不需提交）
+DockerDesktopInstaller.exe
+install*.bat
+install*.ps1
+install*.vbs
+fix-*.bat
+run-without-docker.bat
+auto-fix-docker.ps1
+*修复*.bat
+*安装*.bat
+*安装*.vbs
+BIOS*.txt
+Configuration
+Enabled
+F10

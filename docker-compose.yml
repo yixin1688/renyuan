@@ -1,0 +1,55 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: employee-app-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: employee-app-backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: employee_app
+      DB_USERNAME: app
+      DB_PASSWORD: app123456
+    ports:
+      - "8081:8081"
+
+  mysql:
+    image: mysql:8.4
+    container_name: employee-app-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123456
+      MYSQL_DATABASE: employee_app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app123456
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_0900_ai_ci"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uapp", "-papp123456"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+

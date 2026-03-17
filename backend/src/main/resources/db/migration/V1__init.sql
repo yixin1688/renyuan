@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS employees (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  employee_no VARCHAR(32) NOT NULL,
+  name VARCHAR(64) NOT NULL,
+  gender VARCHAR(16) NULL,
+  phone VARCHAR(32) NULL,
+  email VARCHAR(128) NULL,
+  department VARCHAR(64) NULL,
+  title VARCHAR(64) NULL,
+  hire_date DATE NULL,
+  status VARCHAR(32) NOT NULL DEFAULT 'ACTIVE',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT uk_employees_employee_no UNIQUE (employee_no)
+);
+
+CREATE INDEX idx_employees_name ON employees (name);
+
